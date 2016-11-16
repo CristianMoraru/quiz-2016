@@ -23,14 +23,24 @@ sequelize.sync().then(function(){
 			Quiz.create({
 				pregunta: 'Capital de Italia',
 				respuesta: 'Roma' 
-			});
-			Quiz.create({
-				pregunta: 'Capital de Portugal',
-				respuesta: 'Lisboa'
 			})
+			//Quiz.create({
+			//	pregunta: 'Capital de Portugal',
+			//	respuesta: 'Lisboa'
+			//})
 			.then(function(){
 				console.log('Base de datos inicializada')
 			});
 		};
 	});
 });
+
+//Importar definicion de la tabla Comment
+var comment_path = path.join(__dirname,'comment');
+var Comment = sequelize.import(comment_path);
+
+Comment.belongsTo(Quiz);
+Quiz.hasMany(Comment);
+
+exports.Quiz = Quiz; //exporta tabla Quiz
+exports.Comment = Comment;
