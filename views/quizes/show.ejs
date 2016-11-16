@@ -7,6 +7,19 @@ Pregunta: <%= quiz.pregunta %> <p>
 <p><a href="/quizes/<%= quiz.id %>/comments/new"><button>Nuevo comentario</button></a></p>
 
 <p><strong>Comentarios:</strong></p>
-<% for(i in quiz.Comments){ %> 
-	<p>- <%= quiz.Comments[i].texto %></p>
+<% for(index in quiz.Comments){ %> 
+	<%if(session.user && !quiz.Comments[index].publicado){%>
+		<%if(quiz.Comments[index].publicado){%>
+			<p>- <%=quiz.Comments[index].texto %> (publicado) </p>
+		<%}else{%>
+			<p>- <%=quiz.Comments[index].texto %> --> <strong>Falta por publicar</strong></p> 
+			<a href="/quizes/<%= quiz.id %>/comments/<%=quiz.Comments[index].id%>/publish"><button>Publicar</button></a>
+		<%}%>
+	<%}%>
+	<%if(quiz.Comments[index].publicado){%>
+		<p>- <%=quiz.Comments[index].texto %> </p>
+			
+		</p>
+	<%}%>
+
 <%}%>
